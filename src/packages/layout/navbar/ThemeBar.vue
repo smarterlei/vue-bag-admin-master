@@ -39,7 +39,7 @@
         <component :is="bagHeaderItem" v-bind="{compData}"></component>
     </template>
     <div class="right_menu-item hidden-xs">
-        <img v-if="userinfo.userhead" class="user-head" :src="userinfo.userhead" alt="">
+        <img v-if="userinfo.userhead" class="user-head" :src="getImageFullPath(userinfo.userhead)" alt="">
         <img v-else class="user-head" src="@/packages/assets/image/160161.png" alt="">
         <a-dropdown>
             <a class="ant-dropdown-link" @click.prevent>

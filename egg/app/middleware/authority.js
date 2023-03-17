@@ -8,7 +8,8 @@ module.exports = options => {
             // const nanoid = await ctx.service.redis.get(decodeData.nanoid)
              // ctx.response.status = 403
             const req = await ctx.request
-            const apis = ['edit', 'update', 'delete', 'deletes', 'updatePas']
+            // const apis = ['edit', 'update', 'delete', 'deletes', 'updatePas']  //配置可修改的类型
+            const apis = ['delete', 'deletes', 'updatePas']
             const lastUrls = req.url.split('/')
             if (apis.indexOf(lastUrls[lastUrls.length - 1]) > -1) {
                 ctx.body = { code: 1, data: '', message: '演示数据不予许编辑删除' }
