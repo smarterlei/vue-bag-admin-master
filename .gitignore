@@ -1,0 +1,15 @@
+node_modules
+.DS_Store
+lib
+dist-ssr
+*.local
+.idea
+tw.md
+vc.md
+dist
+.vscode
+lib-utils
+lib-web
+report.html
+docdist
+doc
