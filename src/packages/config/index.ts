@@ -12,8 +12,11 @@ const themeConfig = {
     tabStyle: 1,
     // 是否折叠项目菜单
     foldPrjMenu: false,
+    // 默认主题色
+    colorWeak: false,
 }
 
+const primaryColor='#1890ff'
 /**
  * 网络配置
  */
@@ -55,4 +58,5 @@ export {
     themeConfig,
     httpNetwork,
     webSite,
+    primaryColor
 }

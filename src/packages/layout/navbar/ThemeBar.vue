@@ -76,7 +76,8 @@ import locaStore from '@/common/utils/persistence'
 import { useRouter } from 'vue-router'
 import { useFullscreen } from '@vueuse/core'
 import userPinia from '@/packages/pinia/user'
-
+import appPinia from '@/packages/pinia/app'
+ 
 export default defineComponent({
     components: {
         Setting,
@@ -108,14 +109,14 @@ export default defineComponent({
                         $mitt.emit('reload-router-view')
                     },
                 },
-                // {
-                //     iconName: 'ClearOutlined',
-                //     classItemName: 'right_menu-item hidden-xs',
-                //     classItemIcon: 'icon-svg',
-                //     handle() {
-                //         userSetting.value.showDrawer()
-                //     },
-                // },
+                {
+                    iconName: 'ClearOutlined',
+                    classItemName: 'right_menu-item hidden-xs',
+                    classItemIcon: 'icon-svg',
+                    handle() {
+                        userSetting.value.showDrawer()  // update by wl theme setting
+                    },
+                },
                 {
                     iconName: 'HomeOutlined',
                     classItemName: 'right_menu-item hidden-xs',

@@ -32,9 +32,11 @@ const initCurd = () => {
         apiPrefix: '', // 请求前缀，curd
         // a-table 组件的 $attrs ，继承所有属性和事件
         $tableAttrs: <any>{
-            bordered: true,
+            bordered: false,
             pagination: false,
             loading: false,
+            defaultExpandAllRows: false,
+            defaultExpandedRowKeys: [1,2,3],
             rowKey: 'id',
             size: 'middle',
             scroll: { x: '1200px' },

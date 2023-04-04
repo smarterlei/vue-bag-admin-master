@@ -9,6 +9,7 @@ const columns = [
             $formItemAttrs: {
                 label: '角色名称',
                 name: 'name',
+                rules: [{ required: true, message: '请输入名称' }]
             },
             $elAttrs: { placeholder: '输入角色名称', value: '' },
         },

@@ -27,27 +27,6 @@ const paths = [
         updateTime: dayjs().format('YYYY/MM/DD HH:mm:ss'),
         user_id: null,
     },
-    {
-        name: '测试CURD',
-        path: '/home',
-        icon: 'HomeOutlined',
-        shows: 1,
-        tabHidden: false,
-        tabFix: false,
-        keepAlive: true,
-        filePath: '/admin/views/home/Index.vue',
-        id: nanoid(),
-        createTime: dayjs().format('YYYY/MM/DD HH:mm:ss'),
-        httpFilePath: null,
-        httpViewPath: null,
-        iframePath: null,
-        meun_id: null,
-        order: 0,
-        pid: null,
-        type: null,
-        updateTime: dayjs().format('YYYY/MM/DD HH:mm:ss'),
-        user_id: null,
-    },
 ]
 
 export default paths

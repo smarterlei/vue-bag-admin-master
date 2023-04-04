@@ -1,10 +1,10 @@
 const columns = [
     {
         title: 'ID',
-        dataIndex: 'id',
+        dataIndex: 'name',
         ellipsis: true,
         align: 'center',
-        width: 80,
+        width: 150,
     },
     {
         title: '组织名称',
@@ -34,13 +34,19 @@ const columns = [
         align: 'center',
         width: 180,
         curd: {
-            el: 'a-select',
+            el: 'a-tree-select',
             $formItemAttrs: {
                 autoLink: false,
                 label: '上级ID',
                 name: 'pid',
             },
-            $elAttrs: { placeholder: '选择上级ID', value: '', options: [] },
+            $elAttrs: { 
+                // placeholder: '选择上级ID', value: '', options: [] 
+                placeholder: '选择父级节点，不选择为一级菜单',
+                value: 0,
+                treeData: [],
+                fieldNames: { children: 'children', key: 'id', value: 'id', label: 'name' },
+            },
         },
     },
     {

@@ -98,7 +98,7 @@ const curdTable = {
 
 ## createTableHock
 
-> 处理默认属性和用户自定义的，生成完成配置，响应数据，支持三个参数`columns`,`curdTable`,`options`
+> 处理默认属性和用户自定义的，生成完成配置，响应数据，支持三个参数 `columns`,`curdTable`,`options`
 
 ```javascript
 import { createTableHock } from 'vue-bag-admin'
@@ -106,11 +106,11 @@ import { createTableHock } from 'vue-bag-admin'
 
 #### 参数
 
-|  参数   | 说明  |
-|  ----  | ----  |
-| columns  | 配置单元格的列数，搜索表单、新增、编辑的表单 |
-| curdTable  | 通过initCurd()参数生成属性 |
-|options|配置附加功能|
+| 参数      | 说明                                         |
+| --------- | -------------------------------------------- |
+| columns   | 配置单元格的列数，搜索表单、新增、编辑的表单 |
+| curdTable | 通过initCurd()参数生成属性                   |
+| options   | 配置附加功能                                 |
 
 ### columns
 

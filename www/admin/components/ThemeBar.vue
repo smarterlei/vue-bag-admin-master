@@ -5,9 +5,9 @@
     <div class="right_menu-item hidden-xs" @click="handleAntDesign">
         <AntDesignOutlined class="icon-svg" />
     </div>
-    <div class="right_menu-item hidden-xs" @click="handleGithub">
+    <!-- <div class="right_menu-item hidden-xs" @click="handleGithub">
         <GithubOutlined class="icon-svg" />
-    </div>
+    </div> -->
 <!--    <div class="right_menu-item hidden-xs" @click="handleOfficial">-->
 <!--        <ChromeOutlined class="icon-svg" />-->
 <!--    </div>-->

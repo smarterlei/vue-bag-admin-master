@@ -37,6 +37,8 @@ const columns = [
                 autoLink: false,
                 label: '姓名',
                 name: 'username',
+                rules: [{ required: true, message: '请输入名称' }]
+                
             },
             $elAttrs: { placeholder: '输入姓名', value: '' },
         },

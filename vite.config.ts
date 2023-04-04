@@ -5,7 +5,7 @@ import setWebBuild from './build/web'
 import createVitePlugins from './build/plugin/index'
 import { configServer } from './build/server/index'
 import { configCss } from './build/css/index'
-
+import { generateModifyVars } from './build/generate/generateModifyVars';
 const path = require('path')
 
 export default ({ mode }: { mode: any }) => {
@@ -53,7 +53,15 @@ export default ({ mode }: { mode: any }) => {
             },
         },
         server: configServer(),
-        css: configCss(),
+        css:configCss(),
+        // css: {  // configCss()
+        //     preprocessorOptions: {
+        //         less: {
+        //             modifyVars: generateModifyVars(),
+        //             javascriptEnabled: true,
+        //         },
+        //     }
+        // },
         build,
     })
 }
