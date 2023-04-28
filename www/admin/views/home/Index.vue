@@ -238,8 +238,22 @@
             </bag-card>
         </a-col>
     </a-row>
+    
+            <bag-card :loading="loading">
+                <template v-slot:title>时间轴</template>
+                <Calendar
+            ref="Calendar"
+         
+            backgroundText
+            class-name="select-mode"
+            :remarks="remarks"
+            />
+
+            </bag-card>
+       
 </template>
 <script lang="ts">
+
 import {defineComponent, reactive, ref} from 'vue'
 import Returns from './Returns.vue'
 import ProjectInfo from './ProjectInfo.vue'
@@ -247,7 +261,7 @@ import Ripple from './Ripple.vue'
 import Dynamic from './Dynamic.vue'
 import dayjs from 'dayjs';
 import {CountTo} from 'vue3-count-to'
-
+import Calendar from 'mpvue-calendar'
 export default defineComponent({
     name: 'home',
     components: {
@@ -255,14 +269,17 @@ export default defineComponent({
         ProjectInfo,
         Ripple,
         Dynamic,
-        CountTo
+        CountTo,
+        Calendar
     },
     setup() {
+        
         const loading = ref(true)
         setTimeout(() => {
             loading.value = false
         }, 800)
 
+        const remarks = ref({'2023-04-10': 'some tings'})
 
         const tleData = reactive({
             date: dayjs().format('YYYY年MM月DD日'),
@@ -280,7 +297,8 @@ export default defineComponent({
         tleDataTime()
         return {
             loading,
-            tleData
+            tleData,
+            remarks
         }
     }
 })
