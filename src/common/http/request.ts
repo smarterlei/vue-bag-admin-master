@@ -4,7 +4,7 @@ import { message as messageModel } from 'ant-design-vue'
 import { rsaEncrypt } from '@/common/utils/crypto'
 import { nanoid } from 'nanoid'
 import qs from 'qs'
-
+import { utils } from 'pm-utils'
 
 // 扩展类型
 declare module 'axios' {
@@ -46,10 +46,10 @@ function requestSuccess(config: AxiosRequestConfig, { httpNetwork = {} }: { http
         headers,
         serialize,
     } = getHttpNetworkConfig(httpNetwork)
-    config.baseURL = baseURL
+    config.baseURL = config.baseURL ? config.baseURL : baseURL
     config.timeout = timeout
     const sign = rsaEncrypt(JSON.stringify({ name: 'bag', nanoid: nanoid() }))
-    config.headers = { ...headers, ...config.headers, sign }
+    config.headers = { sign, ...headers, ...config.headers }
     config.retry = retry
     config.retryDelay = retryDelay
     if (config.method === 'post' && serialize) {
@@ -68,16 +68,16 @@ function responseSuccess(res: AxiosResponse<ResponseData>, {
 }: { httpNetwork: any }) {
     const { config } = res
     let { code, data, message } = res.data
-    message = message ? message : '请检查网络配置'
-    const { successCode, messageDuration } = getHttpNetworkConfig(httpNetwork)
+    message = message ? message : '请检查网络服务是否已正常'
+    const { successCode, messageDuration, asuse } = getHttpNetworkConfig(httpNetwork)
     if (successCode.indexOf(code) !== -1) {
         if (config.notify) {
             messageModel.success(message, messageDuration).then()
         }
-        return data
+        return asuse ? res : data
     }
     if (config.notifyError) {
-        messageModel.warning(message, messageDuration)
+        messageModel.warning(message, messageDuration).then()
     }
     const errorData: ResponseErrorData = { message, error: res }
     return Promise.reject(errorData)

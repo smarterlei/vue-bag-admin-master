@@ -2,6 +2,7 @@ node_modules
 .DS_Store
 lib
 dist-ssr
+egg/app/public
 *.local
 .idea
 tw.md

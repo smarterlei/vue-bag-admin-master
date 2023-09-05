@@ -100,7 +100,7 @@ export default [
             el: 'bag-upload-image',
             $formItemAttrs: {
                 autoLink: false,
-                label: '图片地址',
+                label: '图片地址ban',
                 name: 'image',
                 rules: [{ required: true, message: '图片地址必填项', trigger: 'blur' }],
             },
@@ -108,7 +108,7 @@ export default [
                 placeholder: '输入图片地址',
                 value: '',
                 maxlength: 300,
-                isFileMore: false, // 是否多传
+                isFileMore: true, // 是否多传
                 autoCropHeight: 500,
             },
         },

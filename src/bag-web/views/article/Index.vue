@@ -1,10 +1,6 @@
 <template>
-    <div
-        class="article"
-        v-loading="loading"
-        element-loading-text="数据正在加载中..."
-        element-loading-background="rgba(122, 122, 122, 0.1)"
-    >
+    <div class="article" v-loading="loading" element-loading-text="数据正在加载中..."
+        element-loading-background="rgba(122, 122, 122, 0.1)">
         <div class="container" v-if="detailData">
             <el-row :gutter="20">
                 <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
@@ -33,7 +29,7 @@
                         </div>
                         <div class="content">
                             <div class="metas">
-                                <h1 :style="{...detailData.title_style}">{{ detailData.title }}</h1>
+                                <h1 :style="{ ...detailData.title_style }">{{ detailData.title }}</h1>
                             </div>
                             <div class="metas-action">
                                 <div>
@@ -58,7 +54,9 @@
                                 </div>
                             </div>
                             <div class="text">
-                                <Wangeditor :detailData="detailData" />
+                                <!-- <Wangeditor :detailData="detailData" /> -->
+
+                                <el-text>{{ detailData.content }}</el-text>
                                 <Sweet :detailData="detailData" />
                             </div>
                         </div>
@@ -223,5 +221,4 @@ const readingTime = (str: string) => {
         }
     }
 }
-
 </style>

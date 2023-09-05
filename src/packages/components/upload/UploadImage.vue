@@ -1,44 +1,40 @@
 <template>
     <div class="upload-image">
         <a-modal v-model:visible="tailor.visible" width="1000px" okText="确认上传" cancelText="关闭"
-                 :cancelButtonProps="{danger: true,type: 'primary'}" title="上传图片" @ok="tailor.handleConfirm"
-                 :confirm-loading="tailor.loading"
-        >
+            :cancelButtonProps="{ danger: true, type: 'primary' }" title="上传图片" @ok="tailor.handleConfirm"
+            :confirm-loading="tailor.loading">
             <div style="width: 100%;height: 500px">
-                <vueCropper
-                    ref="cropper"
-                    :img="tailor.base64"
-                    :outputSize="0.8"
-                    :autoCrop="true"
-                    :fixedBox="fixedBox"
-                    :autoCropWidth="autoCropWidth"
-                    :autoCropHeight="autoCropHeight"
-                    outputType="png"
-                ></vueCropper>
+                <vueCropper ref="cropper" :img="tailor.base64" :outputSize="0.8" :autoCrop="true" :fixedBox="fixedBox"
+                    :autoCropWidth="autoCropWidth" :autoCropHeight="autoCropHeight" outputType="png"></vueCropper>
             </div>
         </a-modal>
         <div class="action-btn">
-            <a-upload :file-list="fileList" :before-upload="beforeUpload">
+            <a-upload name="file" v-model:file-list="fileList" action="/api/upload/uploadImg" :headers="headers"
+                @change="handleChange">
                 <a-button> 上传图片</a-button>
             </a-upload>&nbsp;
-            <a-button @click="handleSelectImage" type="primary">选择图库</a-button>
+            <!-- <a-button @click="handleSelectImage" type="primary">选择图库</a-button> -->
         </div>
+        <!-- <div class="preview" v-if="imgurl">
+            <div style="margin-right: 10px;display: inline-block;margin-top: 10px;position: relative">
+                <a-image style="object-fit:cover;height:100%;border-radius:3px" :height="100" :width="100"
+                    :src="getImageFullPath(imgurl)"></a-image>
+
+            </div>
+        </div> -->
         <div class="preview">
             <div style="margin-right: 10px;display: inline-block;margin-top: 10px;position: relative"
-                 v-for="(item,idx) in preview.list"
-            >
-                <a-image style="object-fit:cover;height:100%;border-radius:3px" :height="100" :width="100"
-                         :key="item" :src="getImageFullPath(item.url)" alt=""
-                />
+                v-for="(item, idx) in preview.list">
+                <a-image style="object-fit:cover;height:100%;border-radius:3px" :height="100" :width="100" :key="item"
+                    :src="getImageFullPath(item.url)" alt="" />
                 <DeleteOutlined
                     style="position: absolute;top: 3px;right: 3px;border-radius:3px;cursor: pointer;background-color: #36cfc9;padding: 5px;color:#fff"
-                    @click="preview.handleDelete(idx)"
-                />
+                    @click="preview.handleDelete(idx)" />
             </div>
         </div>
         <bag-modal v-model:visible="visible" title="从图库选择" width="85%" @ok="handleAffirm">
             <div class="gallery">
-                <a-row :gutter="[16,16]">
+                <a-row :gutter="[16, 16]">
                     <a-col v-for="item in images" :key="item.id" :xs="24" :sm="12" :md="8" :lg="6" :xl="4">
                         <img @click="handleSelect(item)" :src="getImageFullPath(item.image)" alt="">
                     </a-col>
@@ -144,6 +140,7 @@ export default defineComponent({
         const { getImageFullPath } = inject<any>('bagGlobal')
         watch(() => props.image, (newVal) => {
             if (newVal) {
+                imgurl.value = newVal
                 preview.list = newVal?.split(',').map((item: any) => {
                     return { url: item, source: item }
                 })
@@ -151,7 +148,7 @@ export default defineComponent({
         }, { deep: true, immediate: true })
 
         const emitImages = () => {
-            const str = preview.list.map(function(item: any) {
+            const str = preview.list.map(function (item: any) {
                 return item.source
             }).join(',')
             emit('update:image', str)
@@ -169,7 +166,9 @@ export default defineComponent({
                 tailor.visible = true
             })
         }
-
+        const previewImg = (file: FileItem) => {
+            console.log(file, '自定義預覽')
+        }
         const handleAffirm = () => {
 
         }
@@ -192,16 +191,44 @@ export default defineComponent({
                 })
             })
         }
+        const imgurl = ref()
+        const handleChange = (info: FileInfo) => {
+            console.log('success info', info)
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
 
+                message.success(`${info.file.name} file uploaded successfully`);
+                imgurl.value = info.file.response.data
+
+                if (props.isFileMore) {
+                    preview.list.push({ url: imgurl.value, source: imgurl.value })
+                } else {
+                    preview.list[0] = { url: imgurl.value, source: imgurl.value }
+                }
+
+                emitImages()
+
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        };
         return {
             fileList: ref([]),
+            headers: {
+                authorization: 'authorization-text',
+            },
             beforeUpload,
+            previewImg,
+            handleChange,
             cropper,
             tailor,
             preview,
             getImageFullPath,
             visible,
             images,
+            imgurl,
             handleSelectImage,
             handleAffirm,
             handleSelect,
@@ -210,7 +237,6 @@ export default defineComponent({
 })
 </script>
 <style lang="less" scoped>
-
 .upload-image {
     .cropper {
         height: 600px;
@@ -224,9 +250,7 @@ export default defineComponent({
     }
 
     .preview {
-        img {
-
-        }
+        img {}
     }
 }
 
