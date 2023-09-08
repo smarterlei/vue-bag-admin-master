@@ -5,7 +5,14 @@ import {post} from '@/bag-web/http/request'
 const webChannelAll = (params?: object) => {
     return post('/web/channel/all', params)
 }
-
+const webLeaveAll = (params?: object) => {
+ 
+    return  post('/web/leave/all', params )
+}
+const webLeaveAdd = (params?: object) => {
+ 
+    return  post('/web/leave/create', params )
+}
 // 添加用户
 const memberCreate = (params?: object) => {
     return post('/member/create', params, {notifyError: true})
@@ -73,6 +80,8 @@ const webDownloadPage = (params?: object) => {
 
 export {
     webChannelAll,
+    webLeaveAll,// 留言
+    webLeaveAdd,
     memberCreate,
     userLogin,
     webWebsiteFind,

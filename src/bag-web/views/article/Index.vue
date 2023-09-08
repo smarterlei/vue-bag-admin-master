@@ -54,20 +54,26 @@
                                 </div>
                             </div>
                             <div class="text">
-                                <!-- <Wangeditor :detailData="detailData" /> -->
+                                <Wangeditor :detailData="detailData" />
 
-                                <el-text>{{ detailData.content }}</el-text>
+                                <!-- <el-text>{{ detailData.content }}</el-text> -->
                                 <Sweet :detailData="detailData" />
                             </div>
                         </div>
                     </div>
                     <Praise :detail-data="detailData" />
+                    <el-card class="mt10">
+                        <comment></comment>
+                    </el-card>
                 </el-col>
                 <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
                     <Author :detail-data="detailData" />
                     <Qrcode :detail-data="detailData" />
                     <HotTags :detail-data="detailData" />
                 </el-col>
+
+
+
             </el-row>
         </div>
     </div>
@@ -82,7 +88,7 @@ import HotTags from './HotTags.vue'
 import Praise from './Praise.vue'
 import Sweet from './Sweet.vue'
 import Banner from './banner/Index.vue'
-
+import comment from './comment.vue'
 import { webArticleFind } from '@/bag-web/service/app'
 import { ElLoading } from 'element-plus'
 
@@ -104,6 +110,10 @@ const readingTime = (str: string) => {
 
 </script>
 <style lang="less" scoped>
+.mt10 {
+    margin-top: 10px
+}
+
 .article {
     margin-top: 30px;
     margin-bottom: 30px;

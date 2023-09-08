@@ -1,12 +1,13 @@
 <template>
     <div id="editor">
-        <md-editor previewTheme="mk-cute" codeTheme="paraiso" theme="dark" v-if="detailData" @onUploadImg="onUploadImg"
-            v-model="detailData.content" />
+        <md-editor previewTheme="mk-cute" previewOnly="true" codeTheme="paraiso" v-if="detailData"
+            @onUploadImg="onUploadImg" v-model="detailData.content" />
     </div>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import MdEditor from 'md-editor-v3'
+
 import 'md-editor-v3/lib/style.css'
 import axios from 'axios'
 export default defineComponent({
