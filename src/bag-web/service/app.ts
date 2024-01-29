@@ -13,6 +13,11 @@ const webLeaveAdd = (params?: object) => {
  
     return  post('/web/leave/create', params )
 }
+
+const webLeaveUpdate = (params?: object) => {
+ 
+    return  post('/web/leave/update', params )
+}
 // 添加用户
 const memberCreate = (params?: object) => {
     return post('/member/create', params, {notifyError: true})
@@ -82,6 +87,7 @@ export {
     webChannelAll,
     webLeaveAll,// 留言
     webLeaveAdd,
+    webLeaveUpdate,// 点赞
     memberCreate,
     userLogin,
     webWebsiteFind,

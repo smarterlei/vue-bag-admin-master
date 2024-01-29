@@ -6,8 +6,10 @@
             Click to Upload
         </a-button>
     </a-upload>
+    <appWebSocket></appWebSocket>
 </template>
 <script lang="ts">
+import appWebSocket from '@www/admin/views/module/util/Index.vue'
 import { message } from 'ant-design-vue';
 import { UploadOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
@@ -15,7 +17,7 @@ import type { UploadChangeParam, UploadProps } from 'ant-design-vue';
 
 export default defineComponent({
     components: {
-        UploadOutlined,
+        UploadOutlined, appWebSocket
     },
     setup() {
         const handleChange = (info: UploadChangeParam) => {

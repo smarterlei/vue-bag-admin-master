@@ -116,6 +116,10 @@ const columns = [
         key: 'rolesDetail',
         ellipsis: true,
         align: 'center',
+        customRender: ( rolesDetail: any) => {
+            console.log('render',rolesDetail.value)
+            return rolesDetail.value? rolesDetail.value.name :''
+        },
     },
     {
         title: '职业',

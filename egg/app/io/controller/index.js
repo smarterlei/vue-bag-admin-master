@@ -1,19 +1,30 @@
-'use strict'
+"use strict";
 
-const Controller = require('egg').Controller
+const Controller = require("egg").Controller;
 
 class IndexSocketController extends Controller {
-
     async ping() {
-        const { ctx, app } = this
-        ctx.socket.emit('res', `Hi! I've got your message`)
+        const { ctx, app } = this;
+        ctx.socket.emit("res", `Hi! I've got your message`);
     }
 
     async send() {
-        const { ctx, app } = this
-        // const namespace = app.io.of('/');
-        // namespace.sockets['socketId'].emit('message', '111');
+        const { ctx, app } = this;
+        const namespace = app.io.of("/");
+        namespace.sockets["socketId"].emit("message", "111");
+    }
+
+    async sendMsg() {
+        const { ctx, app } = this;
+        const message = ctx.args[0];
+
+        console.log(message, "msg");
+        // 发送个 res
+        await this.ctx.socket.emit(
+            "res",
+            `Hi! I've got your message: ${message}`
+        );
     }
 }
 
-module.exports = IndexSocketController
+module.exports = IndexSocketController;

@@ -27,6 +27,7 @@ const readExcelToJson = (file: any) => {
             //将Excel 第一个sheet内容转为json格式
             let worksheet = workbook.Sheets[workbook.SheetNames[0]];
             let json = XLSX.utils.sheet_to_json(worksheet);
+            console.log('json',json)
             resolve(json);
         };
         reader.readAsArrayBuffer(file);
