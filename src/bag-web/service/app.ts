@@ -1,9 +1,13 @@
-import {post} from '@/bag-web/http/request'
+import { post, get } from '@/bag-web/http/request'
 
 
 // 获取菜单
 const webChannelAll = (params?: object) => {
     return post('/web/channel/all', params)
+}
+const webFunds = (params?: object) => {
+
+    return post('/web/funds/all', params)
 }
 const webLeaveAll = (params?: object) => {
  
@@ -84,6 +88,7 @@ const webDownloadPage = (params?: object) => {
 }
 
 export {
+    webFunds, // 基金
     webChannelAll,
     webLeaveAll,// 留言
     webLeaveAdd,

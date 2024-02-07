@@ -66,6 +66,7 @@ class WebLeaveController extends baseController {
         const { ctx } = this
         const { ks } = ctx.request.body
         const param = ctx.request.body || {}
+        console.log('-----------', param)
         const where = {}
         for (const paramKey in param) {
             where[paramKey] = { [Op.like]: `%${param[paramKey]}%` } // 模糊查找

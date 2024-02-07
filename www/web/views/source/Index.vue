@@ -29,12 +29,15 @@
 </template>
 <script lang="ts" setup name="source">
 import {ref,reactive} from "vue"
-import {webDownloadAll, webBannerAll} from '@/bag-web/service/app';
+import {webDownloadAll, webBannerAll,webFunds} from '@/bag-web/service/app';
 const downloads = reactive({
     items: [],
 })
 webDownloadAll().then(res=>{
     downloads.items= res
+})
+webFunds().then(res=>{
+    console.log(res,'funds')
 })
  
 </script>

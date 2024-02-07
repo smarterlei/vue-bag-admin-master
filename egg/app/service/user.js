@@ -1,5 +1,6 @@
 const Service = require('egg').Service
-
+const axios = require('axios')
+const moment = require("moment");
 class UserService extends Service {
     async getUserinfo() {
         const {ctx} = this
@@ -41,7 +42,67 @@ class UserService extends Service {
             }
         }
     }
+
+    async fundsInfo() {
+        const { ctx } = this;
+        // 沪深每日100强
+        let url = "https://xueqiu.com/service/v5/stock/screener/quote/list?page=1&size=20&order=desc&order_by=percent&exchange=CN&market=CN&type=sha&_=1659672349641"
+
+        const res = await ctx.curl(url, { dataType: "json", method: "GET" });
+
+        let result = res.data.data.list.splice(0, 20).map((item) => {
+            return {
+                name: item.name,
+                symbol: item.symbol,
+                current: item.current,
+                chg: item.chg >= 0 ? "+" + item.chg : item.chg,
+                amount: item.amount,
+                percent: item.percent,
+                pb: item.pb,
+                peTtm: item.pe_ttm
+                // 涨跌幅
+
+            };
+        });
+        // 给数据库插入多条数据
+        // let outerData = [];
+        // result.forEach((item) => {
+        //     let data = [];
+        //     for (const key in item) {
+        //         data.push(item[key]);
+        //     }
+
+        //     outerData.push(data);
+        // });
+        console.log(" 写入数据库的原始数据 写入原始数据", result[0]);
+        await ctx.model.Web.Chfunds.bulkCreate(result) // 批量添加多条数据
+        try {
+
+            return { data: result }
+
+        }
+        catch (e) {
+            return {
+                data: {},
+                error: '获取失败'
+            }
+        }
+    }
+
+    ///新增
+    async addRows(list) {
+        // list 结构 [[id,title,href],[id,title,href]]
+        const result = await this.app.mysql.query(
+            "INSERT INTO ch_fund (name,symbol,current,chg,amount,precent,datetime) values ?",
+            [list]
+        );
+        return result;
+    }
+
+
 }
+
+
 
 
 module.exports = UserService

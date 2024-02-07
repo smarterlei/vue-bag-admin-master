@@ -12,6 +12,7 @@ class WebLinksController extends baseController {
      */
     async create() {
         const { ctx } = this
+        console.log({ ...ctx.request.body }, '=====links add')
         const result = await ctx.model.Web.Links.create({ ...ctx.request.body })
         this.result({ data: result })
     }

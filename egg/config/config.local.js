@@ -7,6 +7,7 @@ module.exports = (appInfo) => {
         username: "root", // 数据库用户名
         password: "123123", // 数据库密码  admin123 123123
         database: "bagadmin",
+        timezone: '+08:00',
         define: {
             // model的全局配置
             timestamps: true, // 添加create,update,delete时间戳
