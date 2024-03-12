@@ -23,7 +23,7 @@
                 <el-form v-model="queryParams" :inline="true"> 
                     <el-form-item label=" 龙虎榜TOP20"></el-form-item>
                     <el-form-item label="日期">
-                        <el-date-picker type="date" v-model="queryParams.fundDate"  value-format="YYYY-MM-DD"  ></el-date-picker>
+                        <el-date-picker type="date" v-model="queryParams.updateTime"  value-format="YYYY-MM-DD"  ></el-date-picker>
                     </el-form-item>
             </el-form>   
             <el-button @click="getList" type="primary" class="ml20"> 查询</el-button>
@@ -64,7 +64,7 @@ const downloads = reactive({
 })
 const datas = ref([])
 const queryParams = ref({
-    fundDate:'2024-03-01',
+    updateTime:'2024-03-01',
     currentPage:1,
     pageSize:10
 })
@@ -80,9 +80,7 @@ const getList=()=>{
 webDownloadAll().then((res:any)=>{
     downloads.items= res
 })
-webFunds().then(res=>{
-    console.log(res,'funds')
-})
+ 
  
 </script>
 <style lang="less" scoped>

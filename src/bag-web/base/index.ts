@@ -12,13 +12,13 @@ import { setupRouter } from '@/bag-web/router'
 import { setupGlobDirectives } from '@/common/extend/directive'
 import { App } from 'vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 const setupInit = (app: App) => {
     for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
         app.component(key, component)
     }
     app.use(Equal)
-    app.use(ElementPlus)
+    app.use(ElementPlus, { locale: zhCn })
     app.use(setupGlobal)
     app.use(setupStore)
     app.use(setupGlobComponents)
