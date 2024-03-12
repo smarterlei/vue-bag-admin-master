@@ -116,9 +116,12 @@ class WebArticleController extends baseController {
         const { ctx } = this
         const { currentPage = 1, pageSize = 10, ...params } = ctx.request.body
         const where = {}
+        const sqlFragment = `DATE(updateTime) = "${ctx.request.body.updateTime}"`
         for (const whereKey in params) {
+            console.log('where-key', params[whereKey], whereKey)
             if (params[whereKey]) {
-                where[whereKey] = { [Op.like]: `%${params[whereKey]}%` } // 模糊查詢 https://www.sequelize.com.cn/core-concepts/model-querying-basics
+                whereKey === 'updateTime' ? where[whereKey] = Sequelize.literal(sqlFragment) : where[whereKey] = { [Op.like]: `%${params[whereKey]}%` }
+                // 模糊查詢 https://www.sequelize.com.cn/core-concepts/model-querying-basics
             }
         }
         const result = await ctx.model.Web.Article.findAll({

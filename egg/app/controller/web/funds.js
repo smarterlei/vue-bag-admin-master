@@ -35,32 +35,28 @@ class WebFundsController extends baseController {
 
     }
 
+
     async top20() {
         const { ctx } = this
-        console.log('body-------------------------', ctx.request.body)
         const { currentPage = 1, pageSize = 10, ...params } = ctx.request.body
-        console.log('params-------------------------', ctx.request.body.fundDate)
         const where = {}
-        // for (const whereKey in params) {
-        //     if (params[whereKey]) {
-        //         where[whereKey] = { [Op.like]: `%${params[whereKey]}%` } // 模糊查詢 https://www.sequelize.com.cn/core-concepts/model-querying-basics
-        //     }
-        // }
-        const sqlFragment = `DATE(updateTime) = "${ctx.request.body.fundDate}"`; // sql 代码注入
-
+        const sqlFragment = `DATE(updateTime) = "${ctx.request.body.updateTime}"`
+        for (const whereKey in params) {
+            console.log('where-key', params[whereKey], whereKey)
+            if (params[whereKey]) {
+                whereKey === 'updateTime' ? where[whereKey] = Sequelize.literal(sqlFragment) : where[whereKey] = { [Op.like]: `%${params[whereKey]}%` }
+                // 模糊查詢 https://www.sequelize.com.cn/core-concepts/model-querying-basics
+            }
+        }
         const result = await ctx.model.Web.Chfunds.findAll({
-            where: {
-                ...where,
-                updateTime: Sequelize.literal(sqlFragment) // [Op.between]: [6, 10],       or 按照范围查询
-
-            },
-
-            limit: parseInt(pageSize),
-            offset: (currentPage - 1) * pageSize,
-        })
+                where: { ...where },
+                limit: parseInt(pageSize),
+                offset: (currentPage - 1) * pageSize,
+            })
         const total = await ctx.model.Web.Chfunds.count({ where: where })
         this.result({ data: { rows: result, total, pageSize, currentPage } })
     }
+
 
 
 

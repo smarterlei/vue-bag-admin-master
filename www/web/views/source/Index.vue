@@ -27,7 +27,7 @@
                     </el-form-item>
             </el-form>   
             <el-button @click="getList" type="primary" class="ml20"> 查询</el-button>
-                 <el-table :data="datas" border>
+                 <el-table :data="datas" size="small" highlight-current-row border>
                     <el-table-column label="名称" prop="name"></el-table-column>
                     <el-table-column label="股票代码" prop="symbol"></el-table-column>
                     <el-table-column label="股价" prop="current"></el-table-column>
@@ -35,8 +35,22 @@
                     <el-table-column label="成交金额" prop="amount"></el-table-column>
                     <el-table-column label="涨跌幅度" prop="percent"></el-table-column>
                     <el-table-column label="市净率" prop="pb"></el-table-column>
+                    <el-table-column label="日期" prop="updateTime"></el-table-column>
 
+                    
                 </el-table>
+                <el-pagination
+      v-model:current-page="queryParams.currentPage"
+      v-model:page-size="queryParams.pageSize"
+      :total="total"
+      small
+      :page-sizes="[10, 20]"
+      @current-change="getList"
+      @size-change="getList"
+      layout="total, sizes, prev, pager, next"
+      background
+      >
+    </el-pagination>
             </el-row>
         </div>
     </div>
@@ -50,12 +64,16 @@ const downloads = reactive({
 })
 const datas = ref([])
 const queryParams = ref({
-    fundDate:'2024-03-01'
+    fundDate:'2024-03-01',
+    currentPage:1,
+    pageSize:10
 })
+const total =ref(0)
 const getList=()=>{
-    axios.post('api/web/funds/top20',{currentPage:1,pageSize:20,fundDate:queryParams.value.fundDate}).then((res:any)=>{
+    axios.post('api/web/funds/top20',queryParams.value).then((res:any)=>{
             console.log(res,'==========')
             datas.value = res.data.data.rows
+            total.value = res.data.data.total
     })
 }
  getList()
