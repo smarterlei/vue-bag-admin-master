@@ -43,6 +43,10 @@ module.exports = (app) => {
                 type: STRING,
                 comment: "动态市盈率",
             },
+            fundDate:{
+                type: STRING,
+                comment: "基金日期",
+            },
             createTime: {
                 type: DATE,
                 comment: "创建时间",
@@ -61,6 +65,7 @@ module.exports = (app) => {
                     );
                 },
             },
+           
         },
         {
             createdAt: "createTime", // 指定名字

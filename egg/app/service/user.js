@@ -45,6 +45,8 @@ class UserService extends Service {
 
     async fundsInfo() {
         const { ctx } = this;
+        const {fundDate, ...params} = ctx.request.body
+        console.log(fundDate)
         // 沪深每日100强
         let url = "https://xueqiu.com/service/v5/stock/screener/quote/list?page=1&size=20&order=desc&order_by=percent&exchange=CN&market=CN&type=sha&_=1659672349641"
 
@@ -59,7 +61,8 @@ class UserService extends Service {
                 amount: item.amount,
                 percent: item.percent,
                 pb: item.pb,
-                peTtm: item.pe_ttm
+                peTtm: item.pe_ttm,
+                fundDate:fundDate
                 // 涨跌幅
 
             };
@@ -75,10 +78,27 @@ class UserService extends Service {
         //     outerData.push(data);
         // });
         console.log(" 写入数据库的原始数据 写入原始数据", result[0]);
-        await ctx.model.Web.Chfunds.bulkCreate(result) // 批量添加多条数据
+ 
+        const resultlist = await ctx.model.Web.Chfunds.findAll({
+            where: { fundDate },
+          
+        })
+        console.log('redate-list',resultlist.length)
+        
+        
+       
         try {
+            if(resultlist.length>0){
+                return {
+                    data: {},
+                    error: '当前日期已经存在数据'
+                } 
+            }
+            else{
+                await ctx.model.Web.Chfunds.bulkCreate(result) // 批量添加多条数据
+                return { data: result }
 
-            return { data: result }
+            }
 
         }
         catch (e) {
