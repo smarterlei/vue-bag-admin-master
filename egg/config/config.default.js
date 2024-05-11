@@ -27,6 +27,13 @@ module.exports = (appInfo) => {
     // add your middleware config here
     config.middleware = ["authority"];
 
+    // 配置 模版引擎 ejs
+    config.view ={
+        mapping:{
+            '.html':'ejs'
+        }
+    }
+
     // add your user config here
     const userConfig = {
         // myAppName: 'egg',

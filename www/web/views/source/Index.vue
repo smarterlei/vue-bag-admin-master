@@ -21,13 +21,17 @@
             <el-row>
 
                 <el-form v-model="queryParams" :inline="true">
+                <el-form-item><el-button :icon="Refresh" @click="getGrab" plain type="primary" class="ml20"> 抓取当日数据</el-button></el-form-item>
+
                     <el-form-item label=" 龙虎榜TOP20"></el-form-item>
+                    <el-form-item label="名称" prop="name">
+                        <el-input   v-model="queryParams.name"> </el-input>
+                    </el-form-item>
                     <el-form-item label="日期">
                         <el-date-picker type="date" v-model="queryParams.updateTime"
                             value-format="YYYY-MM-DD"></el-date-picker>
                     </el-form-item>
                 </el-form>
-                <el-button @click="getGrab" plain type="primary" class="ml20"> 抓取当日数据</el-button>
 
                 <el-button @click="getList" type="primary" class="ml20"> 查询</el-button>
                 <el-table :data="datas" size="small" highlight-current-row border>
@@ -56,12 +60,14 @@ import { ref, reactive } from "vue"
 import moment from 'moment'
 import { webDownloadAll, webBannerAll, webFunds } from '@/bag-web/service/app';
 import {ElNotification} from "element-plus";
+import { Message,Search,Star,Refresh} from '@element-plus/icons-vue'
+ 
 const downloads = reactive({
     items: [],
 })
 const datas = ref([])
 const queryParams = ref({
-    updateTime: '2024-03-01',
+    updateTime: '2024-05-08',
     currentPage: 1,
     pageSize: 10
 })

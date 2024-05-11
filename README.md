@@ -12,7 +12,7 @@ npm i vue-bag-admin --save
 
 ### 在线演示
 
-> 管理员账户：用户名：superadmin ，密码：123456
+> 管理员账户：用户名：superadmin ，密码：******
 
 [文档地址](https://vite.itnavs.com/doc/)、[管理系统演示](https://vite.itnavs.com/admin.html)
 
@@ -37,10 +37,6 @@ npm i vue-bag-admin --save
 > 正在以及想使用框架快速开发网站系统，有过前端开发经验 2 年+
 >
 >熟悉 Vue.js 技术栈，使用它开发过几个实际项目，热爱技术，爱学习，想进阶和提升的同学
-
-### 二维码
-
-![](./wx.jpg)
 
 ### 版权信息
 
