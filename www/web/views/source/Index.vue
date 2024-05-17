@@ -20,7 +20,7 @@
             </el-row>
             <el-row>
 
-                <el-form v-model="queryParams" :inline="true">
+                <el-form v-model="queryParams" ref="queryRef" :inline="true">
                 <el-form-item><el-button :icon="Refresh" @click="getGrab" plain type="primary" class="ml20"> 抓取当日数据</el-button></el-form-item>
 
                     <el-form-item label=" 龙虎榜TOP20"></el-form-item>
@@ -33,7 +33,9 @@
                     </el-form-item>
                 </el-form>
 
-                <el-button @click="getList" type="primary" class="ml20"> 查询</el-button>
+                <el-button @click="handleQuery" type="primary" class="ml20"> 查询</el-button>
+                <el-button @click="resetQuery" type="primary" plain class="ml20"> 重置</el-button>
+
                 <el-table :data="datas" size="small" highlight-current-row border>
                     <el-table-column label="名称" prop="name"></el-table-column>
                     <el-table-column label="股票代码" prop="symbol"></el-table-column>
@@ -56,12 +58,12 @@
 </template>
 <script lang="ts" setup name="source">
 import axios from 'axios'
-import { ref, reactive } from "vue"
+import { ref, reactive, getCurrentInstance } from "vue"
 import moment from 'moment'
 import { webDownloadAll, webBannerAll, webFunds } from '@/bag-web/service/app';
 import {ElNotification} from "element-plus";
 import { Message,Search,Star,Refresh} from '@element-plus/icons-vue'
- 
+const { proxy } = getCurrentInstance()
 const downloads = reactive({
     items: [],
 })
@@ -80,7 +82,16 @@ const getList = () => {
     })
 }
 getList()
- 
+function handleQuery() {
+  queryParams.value.currentPage = 1;
+  getList();
+}
+/** 重置按钮操作 */
+function resetQuery() {
+  
+  proxy.resetForm("queryRef");
+  handleQuery();
+}
 const getGrab =()=>{
     axios.post('api/web/funds/all',{fundDate:moment().format('yyyy-MM-DD')}).then((res: any) => {
         if(res.data.code=='1001'){
