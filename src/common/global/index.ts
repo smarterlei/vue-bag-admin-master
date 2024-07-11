@@ -7,6 +7,7 @@ import {App} from "vue";
  */
 const getImageFullPath = (app: App) => {
     return function (str: string) {
+        console.log('app', app.config)
         return app.config.globalProperties.configApp.httpNetwork.baseURL + str
     }
 }
