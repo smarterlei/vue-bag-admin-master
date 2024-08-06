@@ -1,7 +1,7 @@
 export default [
     {
         title: '用户昵称',
-        dataIndex: 'name',
+        dataIndex: 'username',
         ellipsis: true,
         align: 'center',
         curd: {
@@ -16,39 +16,49 @@ export default [
         },
     },
     {
-        title: '邮箱',
-        dataIndex: 'email',
+        title: '留言的文章',
+        dataIndex: 'detail',
         align: 'center',
         ellipsis: true,
-        curd: {
-            el: 'a-input',
-            $formItemAttrs: {
-                autoLink: false,
-                label: '用户邮箱',
-                name: 'email',
-                rules: [{ required: true, message: '输入用户邮箱' }],
-            },
-            $elAttrs: { placeholder: '输入用户邮箱', value: '' },
+        customRender: (detail: any) => {
+            console.log('render', detail.value)
+            return detail.value ? detail.value.title : ''
         },
     },
     {
-        title: '网站链接',
-        dataIndex: 'url',
+        title: '地址',
+        dataIndex: 'address',
         align: 'center',
         ellipsis: true,
         curd: {
             el: 'a-input',
             $formItemAttrs: {
                 autoLink: false,
-                label: '网站链接',
+                label: '用户地址',
+                name: 'email',
+                rules: [{ required: true, message: '输入用户地址' }],
+            },
+            $elAttrs: { placeholder: '输入用户地址', value: '' },
+        },
+    },
+    {
+        title: '点赞数量',
+        dataIndex: 'likes',
+        align: 'center',
+        ellipsis: true,
+        curd: {
+            el: 'a-input',
+            $formItemAttrs: {
+                autoLink: false,
+                label: '点赞数量',
                 name: 'url',
             },
-            $elAttrs: { placeholder: '输入网站链接', value: '' },
+            $elAttrs: { placeholder: '输入点赞数量', value: '' },
         },
     },
     {
         title: '留言记录',
-        dataIndex: 'message',
+        dataIndex: 'content',
         ellipsis: true,
         align: 'center',
         curd: {
@@ -56,7 +66,7 @@ export default [
             $formItemAttrs: {
                 autoLink: false,
                 label: '留言记录',
-                name: 'message',
+                name: 'content',
             },
             $elAttrs: { placeholder: '输入留言记录', value: '', maxlength: 300 },
         },

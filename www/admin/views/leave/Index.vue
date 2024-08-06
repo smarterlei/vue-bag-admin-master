@@ -9,7 +9,10 @@ import initCurd, { createTableHock } from '@/packages/hook/tablePlus'
 export default defineComponent({
     setup() {
         const defaultCurdTable = initCurd()
+ 
+        defaultCurdTable.all.api = '/web/leave/page'
         defaultCurdTable.apiPrefix = '/web/leave'
+        defaultCurdTable.all.isPage = true
         const curd = createTableHock({ columns, curdTable: defaultCurdTable })
         return {
             curd,
