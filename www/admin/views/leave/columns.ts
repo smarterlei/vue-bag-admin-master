@@ -21,7 +21,6 @@ export default [
         align: 'center',
         ellipsis: true,
         customRender: (detail: any) => {
-            console.log('render', detail.value)
             return detail.value ? detail.value.title : ''
         },
     },

@@ -161,6 +161,29 @@ const initCurd = () => {
                 })
             },
         },
+        //导出
+        export: {
+            api: '',
+            beforeRequest: <any>null,// 请求成功之前
+            afterRequest: <any>null,// 请求成功之后
+            isPage: false, // 是否开启分页
+            isEmpty: true, // 是否过滤我空 null  undefined 的属性
+            exportData() {
+                console.log('current-api', curdTable.all)
+                curdTable.delete.api = curdTable.apiPrefix + '/export'
+
+                const { current, defaultPageSize } = curdTable.$pageAttrs
+                let params = cloneDeep(curdTable.search.formState)
+
+                return post(curdTable.delete.api, params, { notify: true }).then((res) => {
+                    curdTable.all.getData()
+                    return Promise.resolve(res)
+                }).catch((err) => {
+                    return Promise.reject(err)
+                })
+
+            },
+        },
         // 新增 表单
         create: {
             api: '',
@@ -397,9 +420,10 @@ const initCurd = () => {
             role: true,
         },
         {
-            name: '数据导出',
+            name: '数据导出Plus',
             type: 'primary',
             tag: 'export',
+            click: curdTable.export.exportData,
             effect: 2,
             role: true,
         },

@@ -3,6 +3,8 @@
 const baseController = require('../baseController')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
+const ExcelJS = require("exceljs");
+const path = require("path");
 
 class WebLeaveController extends baseController {
     /**
@@ -121,6 +123,55 @@ class WebLeaveController extends baseController {
             where: { ...where },
         });
         this.result({ data: result });
+    }
+
+    async export() {
+        // 导出 excel
+        try {
+            const { ctx } = this;
+            const { ks } = ctx.request.body;
+            const param = ctx.request.body || {};
+            console.log("-----------导出", param);
+
+            const result = await ctx.model.Web.Leave.findAll();
+
+            // 创建一个新的工作簿
+            const workbook = new ExcelJS.Workbook();
+            // 添加一个工作表
+            const worksheet = workbook.addWorksheet("LeaveBook", {
+                properties: { tabColor: { argb: "FF00FF00" } },
+            });
+
+            // 添加表头
+            worksheet.columns = [
+                { header: "ID", key: "id", width: 10 },
+                { header: "Name", key: "username", width: 10 },
+                { header: "Email", key: "email", width: 10 },
+                { header: "address", key: "address", width: 10 },
+                { header: "content", key: "content", width: 60 },
+                { header: "shows", key: "shows", width: 10 },
+                { header: "createTime", key: "createTime", width: 10 },
+                { header: "updateTime", key: "updateTime", width: 10 },
+                { header: "articleId", key: "articleId", width: 10 },
+                { header: "userId", key: "userId", width: 10 },
+                { header: "userhead", key: "userhead", width: 10 },
+                { header: "likes", key: "likes", width: 10 },
+            ];
+
+            // 添加行数据
+            result.forEach((user) => {
+                worksheet.addRow(user);
+            });
+            const filePath = path.join(
+                this.config.baseDir,
+                "app/public/leavebook.xlsx"
+            );
+            // 写入文件
+            await workbook.xlsx.writeFile(filePath);
+            this.result({ data: `Excel file has been created at ${filePath}` });
+        } catch (error) {
+            this.result({ data: `${error}` });
+        }
     }
 
     /**
